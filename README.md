@@ -57,3 +57,11 @@ netlify login
 netlify init
 netlify deploy --prod --dir=risk-assessment-app
 ```
+
+## GitHub Actions Auto Deploy
+
+This repo includes `.github/workflows/netlify-deploy.yml` to auto deploy on push to `master`.
+
+Required GitHub repository secrets:
+- `NETLIFY_AUTH_TOKEN`: Personal access token from Netlify user settings.
+- `NETLIFY_SITE_ID`: Site ID from Netlify site settings.
