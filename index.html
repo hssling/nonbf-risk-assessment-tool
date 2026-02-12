@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Non-Breastmilk Feeding Risk Assessment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Non-Breastmilk Feeding Risk Assessment</h1>
+    <p class="subtitle">
+      Logistic model-based risk calculator (study sample n=246).
+    </p>
+
+    <form id="risk-form" class="card">
+      <label>
+        Employment Status
+        <select id="employment" required>
+          <option value="3">Unemployed (Reference)</option>
+          <option value="1">Self-employed</option>
+          <option value="2">Employed</option>
+        </select>
+      </label>
+
+      <label>
+        Residence
+        <select id="residence" required>
+          <option value="1">Rural (Reference)</option>
+          <option value="2">Urban</option>
+        </select>
+      </label>
+
+      <label>
+        Parity
+        <select id="parity" required>
+          <option value="1">Primi (Reference)</option>
+          <option value="2">Second</option>
+          <option value="3">Multi</option>
+        </select>
+      </label>
+
+      <label>
+        Birth Weight
+        <select id="birthwt" required>
+          <option value="1">1.5-2.5 kg (LBW, Reference)</option>
+          <option value="2">2.5-4.0 kg (Normal)</option>
+        </select>
+      </label>
+
+      <label>
+        Breastfeeding Initiation
+        <select id="bfinit" required>
+          <option value="2">&gt;1 hr (Delayed, Reference)</option>
+          <option value="1">&lt;1 hr (Early)</option>
+        </select>
+      </label>
+
+      <button type="submit">Calculate Risk</button>
+    </form>
+
+    <section id="result" class="card result hidden" aria-live="polite">
+      <h2>Estimated Probability</h2>
+      <p id="risk-value"></p>
+      <p id="risk-level"></p>
+      <p class="small" id="risk-details"></p>
+    </section>
+
+    <p class="footnote">
+      For academic use only. This tool is not a clinical diagnostic system.
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
