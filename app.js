@@ -19,6 +19,46 @@ function classifyRisk(probability) {
   return { label: "High risk", className: "high" };
 }
 
+function getReasons(formValues) {
+  const reasons = [];
+
+  if (formValues.bfinit === "1") {
+    reasons.push("Early breastfeeding initiation (<1 hour) is linked to lower estimated risk in this model.");
+  } else {
+    reasons.push("Delayed breastfeeding initiation (>1 hour) is linked to higher estimated risk in this model.");
+  }
+
+  if (formValues.birthwt === "2") {
+    reasons.push("Normal birth weight (2.5-4.0 kg) lowers estimated risk compared with low birth weight.");
+  } else {
+    reasons.push("Low birth weight (1.5-2.5 kg) raises estimated risk in this model.");
+  }
+
+  if (formValues.parity === "2") {
+    reasons.push("Second parity is associated with lower estimated risk compared with primi.");
+  } else if (formValues.parity === "3") {
+    reasons.push("Multi parity is slightly lower risk than primi in this model.");
+  } else {
+    reasons.push("Primi is the reference group in this model.");
+  }
+
+  if (formValues.residence === "2") {
+    reasons.push("Urban residence has slightly lower estimated risk than rural in this dataset.");
+  } else {
+    reasons.push("Rural residence is the reference category in this model.");
+  }
+
+  if (formValues.employment === "1") {
+    reasons.push("Self-employment is associated with lower estimated risk than unemployment.");
+  } else if (formValues.employment === "2") {
+    reasons.push("Employment is associated with somewhat lower estimated risk than unemployment.");
+  } else {
+    reasons.push("Unemployment is the reference category in this model.");
+  }
+
+  return reasons;
+}
+
 function calculate(formValues) {
   let logit = COEFF.intercept;
 
@@ -38,7 +78,9 @@ const form = document.getElementById("risk-form");
 const result = document.getElementById("result");
 const riskValue = document.getElementById("risk-value");
 const riskLevel = document.getElementById("risk-level");
+const riskMeaning = document.getElementById("risk-meaning");
 const riskDetails = document.getElementById("risk-details");
+const riskReasons = document.getElementById("risk-reasons");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -54,10 +96,14 @@ form.addEventListener("submit", (event) => {
   const { logit, probability } = calculate(values);
   const { label, className } = classifyRisk(probability);
   const pct = (probability * 100).toFixed(1);
+  const outOf100 = Math.round(probability * 100);
+  const reasons = getReasons(values);
 
   result.classList.remove("hidden");
   riskValue.textContent = `${pct}%`;
   riskLevel.textContent = label;
   riskLevel.className = className;
-  riskDetails.textContent = `Model logit score: ${logit.toFixed(3)}. Outcome estimated: non-breastmilk feeding (Yes).`;
+  riskMeaning.textContent = `This means about ${outOf100} out of 100 mothers with similar inputs may have non-breastmilk feeding.`;
+  riskDetails.textContent = `Model output: probability of non-breastmilk feeding (Yes). Logit score: ${logit.toFixed(3)}.`;
+  riskReasons.innerHTML = reasons.map((reason) => `<li>${reason}</li>`).join("");
 });

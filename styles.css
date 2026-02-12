@@ -99,6 +99,25 @@ button {
   font-weight: 700;
 }
 
+#risk-meaning {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.result h3 {
+  margin: 12px 0 6px;
+  font-size: 1.05rem;
+}
+
+#risk-reasons {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}
+
+#risk-reasons li {
+  margin: 4px 0;
+}
+
 .small,
 .footnote {
   color: var(--muted);
